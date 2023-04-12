@@ -74,6 +74,7 @@ import pandas as pd
 
 URL = 'https://courttribunalfinder.service.gov.uk/search/results.json'
 
+
 if __name__ == "__main__":
     # [TODO]: write your answer here
     nearest_courts: list[dict] = []
