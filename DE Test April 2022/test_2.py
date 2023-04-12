@@ -69,6 +69,25 @@
 # - the dx_number (if available) of the nearest court of the right type
 # - the distance to the nearest court of the right type
 
+import requests
+import pandas as pd
+
+URL = 'https://courttribunalfinder.service.gov.uk/search/results.json'
+
 if __name__ == "__main__":
     # [TODO]: write your answer here
-    pass
+    nearest_courts: list[dict] = []
+    people = pd.read_csv('people.csv')
+    for ind in people.index:
+        response = requests.get(f'{URL}?postcode={people["home_postcode"][ind]}',timeout=5)
+        courts = response.json()
+        for court in courts:
+            if people['looking_for_court_type'][ind] in court['types']:
+                nearest_courts.append({'name':people['person_name'][ind],
+                                       'type':people['looking_for_court_type'][ind],
+                                        'home postcode':people['home_postcode'][ind],
+                                        'nearest court': court['name'],
+                                        'dx_number':court['dx_number'],
+                                        'distance': court['distance']})
+                break
+    print(nearest_courts)
