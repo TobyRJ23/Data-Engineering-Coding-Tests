@@ -31,11 +31,18 @@ def is_log_line(line:str) -> bool:
 # dictionary with keys for "timestamp", "log_level", and "message". The valid log
 # levels are `INFO`, `TRACE`, and `WARNING`. See lines 67 to 71 for how we expect the
 # results to look.
-def get_dict(line):
+def get_dict(line: str) -> dict:
     """Takes a log line and returns a dict with
     `timestamp`, `log_level`, `message` keys
     """
-    pass
+    if is_log_line(line):
+        sections = line[:-1].split(' ')
+        log_dict = {'timestamp': sections[0]+ ' ' + sections[1]}
+        if sections[2] in ['INFO', 'TRACE', 'WARNING']:
+            log_dict.update({'log_level':sections[2]})
+        message_components = [x for i , x in enumerate(sections) if i > 2 and x != '']
+        log_dict.update({'message':' '.join(message_components)})
+        return log_dict
 
 
 # YOU DON'T NEED TO CHANGE ANYTHING BELOW THIS LINE
