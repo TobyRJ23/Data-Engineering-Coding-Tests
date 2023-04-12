@@ -7,13 +7,26 @@ from datetime import datetime
 
 
 # [TODO]: fix the function
-def sum_current_time(time_str: str) -> int:
-    """Expects data in the format HH:MM:SS"""
-    if not isinstance(time_str)
+def time_validation(time_str: str) -> bool:
+    """function checks if input is valid time"""
     try:
         datetime.strptime(time_str, '%H:%M:%S')
-    list_of_nums = time_str.split(":")
-    return sum(list_of_nums)
+    except:
+        raise(ValueError)
+    
+
+
+def sum_current_time(time_str: str) -> int:
+    """Expects data in the format HH:MM:SS"""
+    if not isinstance(time_str, str):
+        raise TypeError
+    try:
+        datetime.strptime(time_str, '%H:%M:%S')
+    except:
+        raise ValueError
+    list_of_string_nums = time_str.split(":")
+    list_of_integer_nums = [int(num) for num in list_of_string_nums]
+    return sum(list_of_integer_nums)
 
 
 def test_unexpected_format():
