@@ -5,11 +5,25 @@
 # There's no perfect way to do this: just decide what you think is reasonable to get
 # the test to pass. The only thing you are not allowed to do is filter out log lines
 # based on the exact row numbers you want to remove.
-def is_log_line(line):
+
+from datetime import datetime
+
+def is_log_line(line:str) -> bool:
     """Takes a log line and returns True if it is a valid log line and returns nothing
     if it is not.
     """
-    return True
+    try:
+        sections = line.split(' ')
+        date_time = sections[0] + sections[1]
+        log = sections[2]
+        if not len(sections) > 3:
+            pass
+        if not log.isupper():
+            pass
+        datetime.strptime(date_time, '%d/%m/%y%H:%M:%S')
+        return True
+    except:
+        pass
 
 
 # [TODO]: step 2
